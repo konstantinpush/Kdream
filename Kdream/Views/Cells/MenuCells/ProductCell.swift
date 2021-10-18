@@ -22,9 +22,13 @@ class ProductCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.productImage.image = nil
+
     }
     func setupCell(product: Product){
+        self.productImage.layer.cornerRadius = 10
         self.productImage.image = product.image
+        self.productImage.contentMode = UIImageView.ContentMode.scaleAspectFill
+        
         self.nameProduct.text = product.name
         self.priceProduct.text = "\(product.price)"
         self.clickForBuy.titleLabel?.text = "В корзину"

@@ -36,7 +36,6 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             let group = menu.groups[selectedGroupIndex]
             return group.products.count
         }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,10 +80,12 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == groupsCollectionView{
             self.selectedGroupIndex = indexPath.item
+            
             self.collectionView.scrollToItem(at: IndexPath(item:0, section:0), at: .centeredHorizontally, animated: false)
             self.collectionView.reloadData()
         }else{
 
         }
     }
+    
 }

@@ -11,15 +11,18 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
    
     var filteredUsers = [User]()
     let searchController = UISearchController()
-    var usersFromServer = User.generateUsers()
+    var usersFromServer = [User]()
     
     @IBOutlet weak var tableUserList: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableUserList.delegate = self
         tableUserList.dataSource = self
         
         initSearchController()
+        
+        usersFromServer = User.generateUsers()
      }
     func initSearchController(){
         searchController.loadViewIfNeeded()
@@ -44,12 +47,10 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         }
         return usersFromServer.count
     }
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "Секция \(section)"
-//    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableUserList.dequeueReusableCell(withIdentifier: "UserTableViewCell") as! UserTableViewCell
         
@@ -68,10 +69,23 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    //alexv17
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last {
+            if indexPath == lastVisibleIndexPath {
+                tableUserList.reloadData()
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            tableUserList.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = usersFromServer[indexPath.row]
         
-        var alert = UIAlertController(title: user.name, message: user.role, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: user.name, message: user.role, preferredStyle: .actionSheet)
         
         let profileAction = UIAlertAction(title: "Профиль", style: .default, handler: {(alert) in
                 self.performSegue(withIdentifier: "goToProfile", sender: indexPath)
@@ -87,10 +101,7 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToProfile"{
             let vc = segue.destination as! UserProfileViewController
-
             let indexPath = sender as! IndexPath
-//            let user = usersFromServer[indexPath.row]
-            
             let user: User!
             
             if searchController.isActive{
@@ -100,15 +111,12 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
                 user = usersFromServer[indexPath.row]
             }
             vc.user = user
-
         }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-//        let scopeButton = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         let searchText = searchBar.text!
-        
         filterSearchTextAndScopeButton(searchText)
     }
     
@@ -122,7 +130,6 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
             else{
                 return true
             }
-
         }
         tableUserList.reloadData()
     }

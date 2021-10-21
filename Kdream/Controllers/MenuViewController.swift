@@ -14,25 +14,61 @@ class MenuViewController: UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var groupsCollectionView: UICollectionView!
+
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "ProductCell", bundle: nil), forCellWithReuseIdentifier: "ProductCell")
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        
         groupsCollectionView.register(UINib(nibName: "GroupCell", bundle: nil), forCellWithReuseIdentifier: "GroupCell")
+        
         self.groupsCollectionView.dataSource = self
-        self.groupsCollectionView.delegate = self
-    }
+        self.collectionView.dataSource = self
 
+        self.collectionView.delegate = self
+        self.groupsCollectionView.delegate = self
+    
+ 
+            let infoFromServerService = InfoFromServerService()
+            infoFromServerService.getPosts{ [weak self] categories in
+                self?.menu.groups = categories
+            }
+    
+//        guard let url = URL(string: "https://kdream.ru/API/GetCategoryFromServer") else { return }
+//        let session = URLSession.shared.dataTask(with: url) { data, response, error in
+//            if error == nil{
+//                do{
+//                    self.menu.groups = try JSONDecoder().decode([Category].self, from: data!)
+//                }catch{
+//                    print(error)
+//                }
+//                DispatchQueue.main.async {
+//                    print(self.menu.groups.count)
+//                    self.collectionView.reloadData()
+//                }
+//            }
+//        }.resume()
+    }
 }
+
+
 extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == groupsCollectionView{
             return menu.groups.count
         }
         else{
+            print(menu.groups.count)
+            while menu.groups.count == 0{
+            
+                    do{
+                groupsCollectionView.reloadData()
+                collectionView.reloadData()
+            }
+            catch{
+                print("error")
+            }
+            }
             let group = menu.groups[selectedGroupIndex]
             return group.products.count
         }
@@ -52,13 +88,12 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             cell.setupCell(product: product)
             return cell
         }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == groupsCollectionView{
             let groupName = menu.groups[indexPath.item].name
-            let width = groupName.widthOfSrting(usingFont: UIFont.systemFont(ofSize: 17))
+            let width = groupName!.widthOfSrting(usingFont: UIFont.systemFont(ofSize: 17))
             return CGSize(width: width+20, height: collectionView.frame.height)
         }else{
             return CGSize(width: UIScreen.main.bounds.width-10, height: UIScreen.main.bounds.width)

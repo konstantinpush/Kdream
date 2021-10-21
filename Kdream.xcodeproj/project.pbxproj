@@ -34,6 +34,7 @@
 		84FE81162700858700955953 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE81152700858700955953 /* UserTableViewCell.swift */; };
 		EB02324E271C9940003F1E1F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB02324D271C9940003F1E1F /* Product.swift */; };
 		EB023251271C9D81003F1E1F /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB023250271C9D81003F1E1F /* PhotoService.swift */; };
+		EB694F1D272093450003A598 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB694F1C272093450003A598 /* Category.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		84FE81152700858700955953 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		EB02324D271C9940003F1E1F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		EB023250271C9D81003F1E1F /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		EB694F1C272093450003A598 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 				8463113226C46309006033C2 /* Menu.swift */,
 				84D4D54E2700F64B00787CCB /* User.swift */,
 				EB02324D271C9940003F1E1F /* Product.swift */,
+				EB694F1C272093450003A598 /* Category.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -213,7 +216,6 @@
 			children = (
 				84D4D54D2700F63200787CCB /* Domain */,
 				84FE810827006AAD00955953 /* ItemForRedactor.swift */,
-				84D4D54B2700F33900787CCB /* DataFromServer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,6 +254,7 @@
 		EB02324F271C9D62003F1E1F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				84D4D54B2700F33900787CCB /* DataFromServer.swift */,
 				EB023250271C9D81003F1E1F /* PhotoService.swift */,
 			);
 			path = Services;
@@ -397,6 +400,7 @@
 				8463113026C460D1006033C2 /* ProductCell.swift in Sources */,
 				84FE81162700858700955953 /* UserTableViewCell.swift in Sources */,
 				8463112A26C45D66006033C2 /* MenuViewController.swift in Sources */,
+				EB694F1D272093450003A598 /* Category.swift in Sources */,
 				84D4D54C2700F33900787CCB /* DataFromServer.swift in Sources */,
 				847D672326C7010A007E45F7 /* GroupCell.swift in Sources */,
 				84FE810927006AAD00955953 /* ItemForRedactor.swift in Sources */,

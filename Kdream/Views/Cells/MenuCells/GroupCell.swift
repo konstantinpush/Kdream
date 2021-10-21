@@ -15,7 +15,7 @@ class GroupCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func SetupCell(group: GroupProduct){
+    func SetupCell(group: Category){
         self.nameGroup.text = group.name
     }
 }

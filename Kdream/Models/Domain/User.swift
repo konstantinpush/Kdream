@@ -27,6 +27,10 @@ class User:NSObject{
         self.role = role
     }
     
+    static func getUsersFromServer(){
+        
+    }
+    
     static func generateUsers() -> [User]{
         let usr1 = User(urlImage: "https://avatars.mds.yandex.net/get-kinopoisk-post-img/2268018/e61cf2df803fb10d6c668804757cc3d9/960x540", name: "джони депчик", role: "Администратор")
        

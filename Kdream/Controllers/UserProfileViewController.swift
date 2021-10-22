@@ -27,7 +27,7 @@ class UserProfileViewController: UIViewController {
         userAvatar.image = user.avatar
         userName.text = user.name
         userRole.text = user.role
-        loadPhoto()
+        PhotoService.loadPhotoFromUrl(_url: "https://html.sammy-codes.com/images/background.jpg")
     }
     
     func loadPhoto(){

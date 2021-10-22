@@ -10,6 +10,9 @@ import UIKit
 class MenuViewController: UIViewController{
     
     var menu: Menu = Menu()
+    var products = [Product]()
+    var service: InfoFromServerService = InfoFromServerService()
+    
     var selectedGroupIndex = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -17,40 +20,30 @@ class MenuViewController: UIViewController{
 
     
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
+        
         collectionView.register(UINib(nibName: "ProductCell", bundle: nil), forCellWithReuseIdentifier: "ProductCell")
         groupsCollectionView.register(UINib(nibName: "GroupCell", bundle: nil), forCellWithReuseIdentifier: "GroupCell")
         
         self.groupsCollectionView.dataSource = self
         self.collectionView.dataSource = self
 
-        self.collectionView.delegate = self
         self.groupsCollectionView.delegate = self
-    
- 
-            let infoFromServerService = InfoFromServerService()
-            infoFromServerService.getPosts{ [weak self] categories in
-                self?.menu.groups = categories
+        self.collectionView.delegate = self
+
+        
+        service.getPosts() { [weak self] categories in
+            self?.menu.groups = categories
+//            self?.menu.groups.first?.products = categories.first?.products
+            
+            DispatchQueue.main.async {
+                self?.groupsCollectionView.reloadData()
+                self?.collectionView.reloadData()
             }
-    
-//        guard let url = URL(string: "https://kdream.ru/API/GetCategoryFromServer") else { return }
-//        let session = URLSession.shared.dataTask(with: url) { data, response, error in
-//            if error == nil{
-//                do{
-//                    self.menu.groups = try JSONDecoder().decode([Category].self, from: data!)
-//                }catch{
-//                    print(error)
-//                }
-//                DispatchQueue.main.async {
-//                    print(self.menu.groups.count)
-//                    self.collectionView.reloadData()
-//                }
-//            }
-//        }.resume()
+        }
     }
 }
-
 
 extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,19 +51,11 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             return menu.groups.count
         }
         else{
-            print(menu.groups.count)
-            while menu.groups.count == 0{
-            
-                    do{
-                groupsCollectionView.reloadData()
-                collectionView.reloadData()
+            guard selectedGroupIndex == 0 else{
+                let group = menu.groups[selectedGroupIndex]
+                return group.products.count
             }
-            catch{
-                print("error")
-            }
-            }
-            let group = menu.groups[selectedGroupIndex]
-            return group.products.count
+            return 0
         }
     }
     
@@ -98,7 +83,6 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
         }else{
             return CGSize(width: UIScreen.main.bounds.width-10, height: UIScreen.main.bounds.width)
         }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -121,6 +105,21 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
         }else{
 
         }
+    }
+    //хз
+    func collectionView(_ collectionView: UICollectionView, didDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == groupsCollectionView{
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if collectionView == groupsCollectionView{
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+//        }
     }
     
 }

@@ -69,17 +69,10 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-    //alexv17
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last {
-            if indexPath == lastVisibleIndexPath {
-                tableUserList.reloadData()
-            }
+        DispatchQueue.main.async {
+            self.tableUserList.reloadData()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            tableUserList.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

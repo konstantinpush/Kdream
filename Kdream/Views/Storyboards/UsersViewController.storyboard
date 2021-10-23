@@ -33,13 +33,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgL-aK-Y6y">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgL-aK-Y6y">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ueg-cx-EZX">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ueg-cx-EZX">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserTableViewCell" rowHeight="100" id="zZJ-ZP-c8E" customClass="UserTableViewCell" customModule="Kdream" customModuleProvider="target">
@@ -84,12 +82,26 @@
                                         </prototypes>
                                     </tableView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ueg-cx-EZX" secondAttribute="trailing" id="GgS-zc-r6X"/>
+                                    <constraint firstItem="Ueg-cx-EZX" firstAttribute="leading" secondItem="hgL-aK-Y6y" secondAttribute="leading" id="I1Y-7F-RPp"/>
+                                    <constraint firstItem="Ueg-cx-EZX" firstAttribute="bottom" secondItem="6aQ-oE-Gex" secondAttribute="bottom" id="YMy-GT-mqc"/>
+                                    <constraint firstItem="Ueg-cx-EZX" firstAttribute="top" secondItem="6aQ-oE-Gex" secondAttribute="top" id="dfI-b0-wHR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ueg-cx-EZX" secondAttribute="bottom" id="hgu-TY-MBG"/>
+                                    <constraint firstItem="Ueg-cx-EZX" firstAttribute="centerX" secondItem="hgL-aK-Y6y" secondAttribute="centerX" id="mv6-1L-9lm"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="CIc-Nr-s1g"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="6aQ-oE-Gex"/>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hgL-aK-Y6y" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="I9T-jH-n5w"/>
+                            <constraint firstItem="hgL-aK-Y6y" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="VF4-MZ-LGX"/>
+                            <constraint firstItem="hgL-aK-Y6y" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Ysw-fi-OOr"/>
+                            <constraint firstItem="hgL-aK-Y6y" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="rTf-ky-njJ"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Пользователи" image="person.2" catalog="system" id="tVu-72-MyR"/>
                     <navigationItem key="navigationItem" title="Пользователи" id="3aU-8b-P2E"/>

@@ -10,15 +10,12 @@ import UIKit
 
 class InfoFromServerService{
     
-    func getPosts(_ completion: @escaping ([Category]) -> Void) {
+    func getAllCategoryFromServer(_ completion: @escaping ([Category]) -> Void) {
         guard let url = URL(string: "https://kdream.ru/API/GetCategoryFromServer") else { return }
-        let session = URLSession.shared.dataTask(with: url) { data, response, error in
-            
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("There was an error: \(error.localizedDescription)")
             } else {
-                let jsonRes = try? JSONSerialization.jsonObject(with: data!, options: [])
-                
                 let jsonDecoder = JSONDecoder()
                 if let data = data,
                    let categories = try? jsonDecoder.decode([Category].self, from: data)  {
@@ -27,29 +24,65 @@ class InfoFromServerService{
                     }
                     
                 }else {
-                    print(error)
+                    print("error")
                 }
             }
         }.resume()
     }
     
-    func getDataFromDatabase(completion: @escaping([Category]) -> Void) {
-        guard let url = URL(string: "https://kdream.ru/API/GetCategoryFromServer") else { return }
-        let session = URLSession.shared.dataTask(with: url) { data, response, error in
+    func getAllUsersFromServer(_ completion: @escaping ([User]) -> Void) {
+        guard let url = URL(string: "https://kdream.ru/API/GetAllUsers") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
             
             if let error = error {
                 print("There was an error: \(error.localizedDescription)")
             } else {
-                let jsonRes = try? JSONSerialization.jsonObject(with: data!, options: [])
-                
                 let jsonDecoder = JSONDecoder()
                 if let data = data,
-                   let categories = try? jsonDecoder.decode([Category].self, from: data)  {
-                    completion(categories)
+                   let users = try? jsonDecoder.decode([User].self, from: data)  {
+                    DispatchQueue.main.async {
+                        completion(users)
+                    }
+                    
                 }else {
-                    print(error)
+                    print("error")
                 }
             }
         }.resume()
     }
+    
+    func getAllProductsFromServer(_ completion: @escaping ([Product]) -> Void) {
+        guard let url = URL(string: "https://kdream.ru/API/GetAllProducts") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            if let error = error {
+                print("There was an error: \(error.localizedDescription)")
+            } else {
+                let jsonDecoder = JSONDecoder()
+                if let data = data,
+                   let products = try? jsonDecoder.decode([Product].self, from: data)  {
+                    DispatchQueue.main.async {
+                        completion(products)
+                    }
+                    
+                }else {
+                    print("error")
+                }
+            }
+        }.resume()
+    }
+    
+    
 }
+
+// shift del ????
+// повтор содержания функции
+    //дебаг
+    //tests
+    // sample of protocols
+// clousers
+//services
+//patterns
+//dedlocks
+//что требуется для джуна
+    // что требуется для неоф раб

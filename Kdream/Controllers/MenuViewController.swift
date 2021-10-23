@@ -33,7 +33,7 @@ class MenuViewController: UIViewController{
         self.collectionView.delegate = self
 
         
-        service.getPosts() { [weak self] categories in
+        service.getAllCategoryFromServer() { [weak self] categories in
             self?.menu.groups = categories
 //            self?.menu.groups.first?.products = categories.first?.products
             
@@ -115,11 +115,9 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if collectionView == groupsCollectionView{
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-//        }
     }
     
 }

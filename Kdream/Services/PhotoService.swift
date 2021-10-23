@@ -16,14 +16,14 @@ class PhotoService{
     public static func loadPhotoFromUrl(_url: String) -> UIImage{
         let cacheID = NSString(string: _url)
         var imgFromNet = UIImage()
-        
+
         if let imageFromCache = imageCache.object(forKey: cacheID){
             imgFromNet = UIImage(data: imageFromCache as Data)!
             return imgFromNet
         }
-        
+
         if let url = URL(string: _url) {
-            
+
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data, error == nil else { return }
                 DispatchQueue.main.async {
@@ -34,6 +34,28 @@ class PhotoService{
             task.resume()
         }
         return imgFromNet
+    }
+    
+    func loadPhotoFromUrlClouser(_url: String, _ completion: @escaping (UIImage) -> Void) {
+        let cacheID = NSString(string: _url)
+        var imgFromNet = UIImage()
+        
+        if let imageFromCache = imageCache.object(forKey: cacheID){
+            imgFromNet = UIImage(data: imageFromCache as Data)!
+        }
+        
+        if let url = URL(string: _url) {
+            
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async {
+                    imgFromNet = UIImage(data: data) ?? UIImage(named: "img-user")!
+                    imageCache.setObject(data as NSData, forKey: cacheID)
+                    completion(imgFromNet)
+                }
+            }
+            task.resume()
+        }
     }
 }
 

@@ -7,29 +7,29 @@
 
 import UIKit
 
-class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate {
+class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate {
    
-    var filteredUsers = [User]()
+    var filteredProducts = [Product]()
     let searchController = UISearchController()
     
     var service: InfoFromServerService = InfoFromServerService()
-    var usersFromServer = [User]()
+    var productsFromServer = [Product]()
     
-    @IBOutlet weak var tableUserList: UITableView!
+    @IBOutlet weak var tableProductsList: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableUserList.delegate = self
-        tableUserList.dataSource = self
+        tableProductsList.delegate = self
+        tableProductsList.dataSource = self
         
         initSearchController()
         
         var InfoFromServerService = InfoFromServerService()
         
-        service.getAllUsersFromServer() { [weak self] users in
-            self?.usersFromServer = users
+        service.getAllProductsFromServer() { [weak self] products in
+            self?.productsFromServer = products
             DispatchQueue.main.async {
-                self?.tableUserList.reloadData()
+                self?.tableProductsList.reloadData()
             }
         }
      }
@@ -47,51 +47,50 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
 }
 
-extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
+extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive{
-            return filteredUsers.count
+            return filteredProducts.count
         }
-        return usersFromServer.count
+        return productsFromServer.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableUserList.dequeueReusableCell(withIdentifier: "UserTableViewCell") as! UserTableViewCell
+        let cell = tableProductsList.dequeueReusableCell(withIdentifier: "ProductTableViewCell") as! ProductTableViewCell
         
-        let user: User!
+        let product: Product!
         
         if searchController.isActive{
-            user = filteredUsers[indexPath.row]
+            product = filteredProducts[indexPath.row]
         }
         else{
-            user = usersFromServer[indexPath.row]
+            product = productsFromServer[indexPath.row]
         }
         
-        cell.userName.text = user.name
-        cell.userAvatar.image = user.avatar
+        cell.productName.text = product.name
+        cell.productImage.image = product.image
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.tableUserList.reloadData()
+            self.tableProductsList.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = usersFromServer[indexPath.row]
+        let product = productsFromServer[indexPath.row]
         
-        let alert = UIAlertController(title: user.name, message: user.role, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: product.name, message: product.description, preferredStyle: .actionSheet)
         
         let profileAction = UIAlertAction(title: "Профиль", style: .default, handler: {(alert) in
-                self.performSegue(withIdentifier: "goToProfile", sender: indexPath)
+                self.performSegue(withIdentifier: "goToProduct", sender: indexPath)
             })
         
         alert.addAction(profileAction)
@@ -101,21 +100,21 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         self.present(alert, animated: true, completion: nil)
     }
         
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToProfile"{
-            let vc = segue.destination as! UserProfileViewController
-            let indexPath = sender as! IndexPath
-            let user: User!
-            
-            if searchController.isActive{
-                user = filteredUsers[indexPath.row]
-            }
-            else{
-                user = usersFromServer[indexPath.row]
-            }
-            vc.user = user
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "goToProduct"{
+//            let vc = segue.destination as! ProductsProfileViewController
+//            let indexPath = sender as! IndexPath
+//            let product: Product!
+//
+//            if searchController.isActive{
+//                product = filteredProducts[indexPath.row]
+//            }
+//            else{
+//                product = productsFromServer[indexPath.row]
+//            }
+//            vc.user = user
+//        }
+//    }
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -124,7 +123,7 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func filterSearchTextAndScopeButton(_ searchText: String){
-        filteredUsers = usersFromServer.filter{
+        filteredProducts = productsFromServer.filter{
             user in
             if searchController.searchBar.text != ""{
                 let searchTextMatch = user.name.lowercased().contains(searchText.lowercased())
@@ -134,6 +133,6 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
                 return true
             }
         }
-        tableUserList.reloadData()
+        tableProductsList.reloadData()
     }
 }

@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="-1791" y="-763"/>
         </scene>
-        <!--RedactorViewController-->
+        <!--ProductsViewController-->
         <scene sceneID="yqh-Bn-c1g">
             <objects>
-                <viewControllerPlaceholder storyboardName="RedactorViewController" id="GTu-SQ-16s" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="ProductsViewController" id="GTu-SQ-16s" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="ljb-2E-Alg"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NP0-5u-wTP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -76,7 +76,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z4m-Od-BGR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-964" y="-667"/>
+            <point key="canvasLocation" x="-928" y="-684"/>
         </scene>
         <!--Каталог-->
         <scene sceneID="tne-QT-ifu">

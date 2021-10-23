@@ -18,7 +18,7 @@ class Menu{
     var groups = [Category]()
     
     init(){
-        var infoServer = InfoFromServerService()
+//        var infoServer = InfoFromServerService()
         //InfoFromServerService.getProductsFromServer { products in
 //        self.groups = infoServer.categories
          }

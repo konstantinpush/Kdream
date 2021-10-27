@@ -29,6 +29,7 @@ class PhotoService{
                 DispatchQueue.main.async {
                     imgFromNet = UIImage(data: data) ?? UIImage(named: "img-user")!
                     imageCache.setObject(data as NSData, forKey: cacheID)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                 }
             }
             task.resume()
@@ -52,6 +53,8 @@ class PhotoService{
                     imgFromNet = UIImage(data: data) ?? UIImage(named: "img-user")!
                     imageCache.setObject(data as NSData, forKey: cacheID)
                     completion(imgFromNet)
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                 }
             }
             task.resume()

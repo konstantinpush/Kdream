@@ -10,10 +10,11 @@ import UIKit
 class ProductCell: UICollectionViewCell {
 
     @IBOutlet weak var nameProduct: UILabel!
-    @IBOutlet weak var priceProduct: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var clickForBuy: UIButton!
+    @IBOutlet weak var descriptionProduct: UITextView!
     
+    @IBOutlet weak var btnToCart: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,16 +23,31 @@ class ProductCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.productImage.image = nil
-
     }
+    
     func setupCell(product: Product){
         self.productImage.layer.cornerRadius = 10
         self.productImage.image = product.image
         self.productImage.contentMode = UIImageView.ContentMode.scaleAspectFill
         
         self.nameProduct.text = product.name
-        self.priceProduct.text = "\(product.price)"
-        self.clickForBuy.titleLabel?.text = "В корзину"
+        
+        self.btnToCart.setTitle("\(product.price)", for: .normal)
+
+        self.descriptionProduct.attributedText = htmlRaw(product.description ?? "")
+
     }
 
+}
+
+func htmlRaw(_ inputString: String) -> NSAttributedString?{
+    let data = Data(inputString.utf8)
+    
+    if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+        return attributedString
+    }
+    else{
+        print("error")
+        return nil
+    }
 }

@@ -1,5 +1,3 @@
-//
-//  ProductTableViewCell.swift
 //  Kdream
 //
 //  Created by Kasatin on 23.10.2021.
@@ -12,7 +10,6 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var productName: UILabel!
     @IBOutlet weak var productImage: UIImageView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,8 +17,6 @@ class ProductTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-
 }

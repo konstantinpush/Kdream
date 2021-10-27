@@ -18,17 +18,6 @@ class UserProfileViewController: UIViewController {
     var user: User!
     var photoservice:PhotoService = PhotoService()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        photoservice.loadPhotoFromUrlClouser(_url: "https://html.sammy-codes.com/images/background.jpg"){ [weak self] img in
-            self?.imgFromNet.image = img
-            
-            DispatchQueue.main.async {
-                self?.imgFromNet.reloadInputViews()
-            }
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,5 +25,12 @@ class UserProfileViewController: UIViewController {
         userName.text = user.name
         userRole.text = user.role
 
+        photoservice.loadPhotoFromUrlClouser(_url: "https://html.sammy-codes.com/images/background.jpg"){ [weak self] img in
+            self?.imgFromNet.image = img
+
+            DispatchQueue.main.async {
+                self?.imgFromNet.reloadInputViews()
+            }
+        }
     }
 }

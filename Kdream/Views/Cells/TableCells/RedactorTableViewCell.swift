@@ -4,11 +4,9 @@
 //
 //  Created by Admin on 26.09.2021.
 //
-
 import UIKit
 
 class RedactorTableViewCell: UITableViewCell {
-
 
     override func awakeFromNib() {
         super.awakeFromNib()

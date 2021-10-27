@@ -13,13 +13,7 @@ struct Category:Decodable{
     var description: String?
     var image: String?
     var photoInApp: UIImage{
-        get{
-            print(image)
-            return PhotoService.loadPhotoFromUrl(_url: image ?? "img-user")
-        }
-        set{
-            //
-        }
+        PhotoService.loadPhotoFromUrl(_url: image ?? "img-user")
     }
     var products: [Product]
     

@@ -32,6 +32,7 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
                 self?.tableUserList.reloadData()
             }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
      }
     
     func initSearchController(){
@@ -51,6 +52,10 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
 }
 
 extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
+    @objc func refresh() {
+       self.tableUserList.reloadData() // a refresh the tableView.
+   }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive{
             return filteredUsers.count
@@ -75,15 +80,16 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.userName.text = user.name
         cell.userAvatar.image = user.avatar
+    
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            self.tableUserList.reloadData()
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        DispatchQueue.main.async {
+//            self.tableUserList.reloadData()
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = usersFromServer[indexPath.row]

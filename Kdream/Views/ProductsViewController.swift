@@ -24,15 +24,18 @@ class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearc
         
         initSearchController()
         
-        var InfoFromServerService = InfoFromServerService()
-        
         service.getAllProductsFromServer() { [weak self] products in
             self?.productsFromServer = products
-            DispatchQueue.main.async {
-                self?.tableProductsList.reloadData()
-            }
+            
+//            DispatchQueue.main.async {
+//                self?.tableProductsList.reloadData()
+//            }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
      }
+    @objc func refresh() {
+        tableProductsList.reloadData() // a refresh the tableView.
+    }
     
     func initSearchController(){
         searchController.loadViewIfNeeded()
@@ -74,30 +77,23 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.productName.text = product.name
         cell.productImage.image = product.image
-        
+//        cell.productPrice.text = product.price
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            self.tableProductsList.reloadData()
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let product = productsFromServer[indexPath.row]
-        
-        let alert = UIAlertController(title: product.name, message: product.description, preferredStyle: .actionSheet)
-        
-        let profileAction = UIAlertAction(title: "Профиль", style: .default, handler: {(alert) in
+//        let product = productsFromServer[indexPath.row]
+//
+//        let alert = UIAlertController(title: product.name, message: product.description, preferredStyle: .actionSheet)
+//
+//        let profileAction = UIAlertAction(title: "Профиль", style: .default, handler: {(alert) in
                 self.performSegue(withIdentifier: "goToProduct", sender: indexPath)
-            })
+//            })
         
-        alert.addAction(profileAction)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        
-        
-        self.present(alert, animated: true, completion: nil)
+//        alert.addAction(profileAction)
+//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//
+//        self.present(alert, animated: true, completion: nil)
     }
         
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -135,4 +131,13 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         tableProductsList.reloadData()
     }
+
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let offsetY = scrollView.contentOffset.y
+//        let contentHeight = scrollView.contentSize.height
+//        print("offset \(offsetY) | contentHeight \(contentHeight)")
+//    }
 }
+
+

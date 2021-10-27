@@ -32,8 +32,10 @@
 		84FE81162700858700955953 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FE81152700858700955953 /* UserTableViewCell.swift */; };
 		EB02324E271C9940003F1E1F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB02324D271C9940003F1E1F /* Product.swift */; };
 		EB023251271C9D81003F1E1F /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB023250271C9D81003F1E1F /* PhotoService.swift */; };
+		EB211C18272838E70030571C /* TestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB211C17272838E70030571C /* TestClass.swift */; };
 		EB2F47E42724982C007FE28D /* ProductsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB2F47E32724982C007FE28D /* ProductsViewController.storyboard */; };
 		EB694F1D272093450003A598 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB694F1C272093450003A598 /* Category.swift */; };
+		EB95653727273B7A00BF9B49 /* ProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB95653627273B7A00BF9B49 /* ProductInfoViewController.swift */; };
 		EBE8388127248B100079CC7A /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE8388027248B100079CC7A /* ProductsViewController.swift */; };
 		EBE83885272491F10079CC7A /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE83884272491F10079CC7A /* ProductTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -87,8 +89,10 @@
 		84FE81152700858700955953 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		EB02324D271C9940003F1E1F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		EB023250271C9D81003F1E1F /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		EB211C17272838E70030571C /* TestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClass.swift; sourceTree = "<group>"; };
 		EB2F47E32724982C007FE28D /* ProductsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProductsViewController.storyboard; sourceTree = "<group>"; };
 		EB694F1C272093450003A598 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		EB95653627273B7A00BF9B49 /* ProductInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoViewController.swift; sourceTree = "<group>"; };
 		EBE8388027248B100079CC7A /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProductsViewController.swift; path = Kdream/Views/ProductsViewController.swift; sourceTree = SOURCE_ROOT; };
 		EBE83884272491F10079CC7A /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +213,7 @@
 				84D4D54E2700F64B00787CCB /* User.swift */,
 				EB02324D271C9940003F1E1F /* Product.swift */,
 				EB694F1C272093450003A598 /* Category.swift */,
+				EB211C17272838E70030571C /* TestClass.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				84F34AF4270255C700709A27 /* UserProfileViewController.swift */,
 				EBE8388027248B100079CC7A /* ProductsViewController.swift */,
 				84F70075270644330014ECE9 /* SettingsViewController.swift */,
+				EB95653627273B7A00BF9B49 /* ProductInfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -416,6 +422,8 @@
 				84FE811327007E0800955953 /* UsersViewController.swift in Sources */,
 				EB023251271C9D81003F1E1F /* PhotoService.swift in Sources */,
 				EBE83885272491F10079CC7A /* ProductTableViewCell.swift in Sources */,
+				EB95653727273B7A00BF9B49 /* ProductInfoViewController.swift in Sources */,
+				EB211C18272838E70030571C /* TestClass.swift in Sources */,
 				8463113326C46309006033C2 /* Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

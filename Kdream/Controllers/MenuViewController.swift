@@ -17,7 +17,6 @@ class MenuViewController: UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var groupsCollectionView: UICollectionView!
-
     
     override func viewDidLoad() {
         
@@ -34,28 +33,38 @@ class MenuViewController: UIViewController{
 
         
         service.getAllCategoryFromServer() { [weak self] categories in
+
             self?.menu.groups = categories
-//            self?.menu.groups.first?.products = categories.first?.products
+            self?.groupsCollectionView.reloadData()
             
-            DispatchQueue.main.async {
-                self?.groupsCollectionView.reloadData()
+            for i in (0...categories.count-1) {
+                print(self?.menu.groups[i].products.count)
+                self?.menu.groups[i].products = categories[i].products
                 self?.collectionView.reloadData()
             }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
     }
 }
 
 extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    @objc func refresh() {
+       self.collectionView.reloadData() 
+   }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == groupsCollectionView{
             return menu.groups.count
         }
         else{
-            guard selectedGroupIndex == 0 else{
-                let group = menu.groups[selectedGroupIndex]
-                return group.products.count
+            let groups = menu.groups
+            guard groups.count > 0 else{
+                return 0
             }
-            return 0
+            let group = menu.groups[selectedGroupIndex]
+            refresh()
+            return group.products.count
         }
     }
     
@@ -103,21 +112,21 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             self.collectionView.scrollToItem(at: IndexPath(item:0, section:0), at: .centeredHorizontally, animated: false)
             self.collectionView.reloadData()
         }else{
-
+            //
         }
     }
     //хз
-    func collectionView(_ collectionView: UICollectionView, didDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView == groupsCollectionView{
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-    }
+//    func collectionView(_ collectionView: UICollectionView, didDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if collectionView == groupsCollectionView{
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
+//            }
+//        }
+//    }
+//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
+//            }
+//    }
     
 }

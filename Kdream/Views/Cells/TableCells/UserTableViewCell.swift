@@ -11,6 +11,7 @@ class UserTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,5 +22,4 @@ class UserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

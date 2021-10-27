@@ -10,6 +10,7 @@ import UIKit
 class GroupCell: UICollectionViewCell {
 
     @IBOutlet weak var nameGroup: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

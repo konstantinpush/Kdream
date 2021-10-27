@@ -21,8 +21,10 @@ class InfoFromServerService{
                    let categories = try? jsonDecoder.decode([Category].self, from: data)  {
                     DispatchQueue.main.async {
                         completion(categories)
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
+                        
                     }
-                    
                 }else {
                     print("error")
                 }
@@ -42,6 +44,7 @@ class InfoFromServerService{
                    let users = try? jsonDecoder.decode([User].self, from: data)  {
                     DispatchQueue.main.async {
                         completion(users)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                     }
                     
                 }else {
@@ -63,6 +66,7 @@ class InfoFromServerService{
                    let products = try? jsonDecoder.decode([Product].self, from: data)  {
                     DispatchQueue.main.async {
                         completion(products)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                     }
                     
                 }else {
@@ -85,4 +89,4 @@ class InfoFromServerService{
 //patterns
 //dedlocks
 //что требуется для джуна
-    // что требуется для неоф раб
+// что требуется для неоф раб

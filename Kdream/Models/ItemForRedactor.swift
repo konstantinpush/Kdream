@@ -21,6 +21,7 @@ class ItemForRedactor: NSObject{
     }
 }
 
+
 /*struct Category{
     var CategoryId: Int
     var Name: String

@@ -17,12 +17,7 @@ class User:Decodable{
 
     var image: String
     var avatar: UIImage{
-        get{
-            return PhotoService.loadPhotoFromUrl(_url: image)
-        }
-        set{
-            //
-        }
+        PhotoService.loadPhotoFromUrl(_url: image)
     }
 
     init(id: String, phone: String, image:String, email:String, name: String, role: String){

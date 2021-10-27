@@ -10,19 +10,13 @@ import UIKit
 
 struct Product: Decodable{
     var name: String
-    var description: String
+    var description: String?
     var tth: String?
     var mainphoto: String
     var urlword: String
     var price: Decimal
     var image: UIImage{
-        get{
-            print(mainphoto)
-            return PhotoService.loadPhotoFromUrl(_url: "https://kdream.ru/"+mainphoto)
-        }
-        set{
-            //
-        }
+            PhotoService.loadPhotoFromUrl(_url: "https://kdream.ru/"+mainphoto)
     }
     init(name: String, description: String, tth: String,  mainphoto: String, urlword: String, price: Decimal){
         self.name = name

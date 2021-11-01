@@ -30,56 +30,49 @@ class MenuViewController: UIViewController{
 
         self.groupsCollectionView.delegate = self
         self.collectionView.delegate = self
-
         
         service.getAllCategoryFromServer() { [weak self] categories in
-
             self?.menu.groups = categories
             self?.groupsCollectionView.reloadData()
-            
-            for i in (0...categories.count-1) {
-                print(self?.menu.groups[i].products.count)
-                self?.menu.groups[i].products = categories[i].products
-                self?.collectionView.reloadData()
-            }
+            self?.collectionView.reloadData()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
     }
 }
 
 extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
-    @objc func refresh() {
-       self.collectionView.reloadData() 
-   }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == groupsCollectionView{
+        if collectionView == groupsCollectionView {
             return menu.groups.count
-        }
-        else{
+        } else {
             let groups = menu.groups
-            guard groups.count > 0 else{
+            guard groups.count > 0 else {
                 return 0
             }
             let group = menu.groups[selectedGroupIndex]
-            refresh()
             return group.products.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == groupsCollectionView{
+        if collectionView == groupsCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GroupCell", for: indexPath) as! GroupCell
             let group = menu.groups[indexPath.item]
             cell.SetupCell(group: group)
             return cell
-        }
-        else{
+        } else {
             let group = menu.groups[selectedGroupIndex]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCell", for: indexPath) as! ProductCell
             let product = group.products[indexPath.item]
             cell.setupCell(product: product)
+
+            cell.nameProduct.text = product.name
+            product.getImage() { image, name in
+                if name == cell.nameProduct.text,
+                    let _cell = collectionView.cellForItem(at: indexPath) as? ProductCell {
+                    _cell.productImage.image = image
+                }
+            }
             return cell
         }
     }
@@ -89,7 +82,7 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             let groupName = menu.groups[indexPath.item].name
             let width = groupName!.widthOfSrting(usingFont: UIFont.systemFont(ofSize: 17))
             return CGSize(width: width+20, height: collectionView.frame.height)
-        }else{
+        } else {
             return CGSize(width: UIScreen.main.bounds.width-10, height: UIScreen.main.bounds.width)
         }
     }
@@ -111,22 +104,8 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
             
             self.collectionView.scrollToItem(at: IndexPath(item:0, section:0), at: .centeredHorizontally, animated: false)
             self.collectionView.reloadData()
-        }else{
+        } else {
             //
         }
     }
-    //хз
-//    func collectionView(_ collectionView: UICollectionView, didDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if collectionView == groupsCollectionView{
-//            DispatchQueue.main.async {
-//                self.collectionView.reloadData()
-//            }
-//        }
-//    }
-//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//            DispatchQueue.main.async {
-//                self.collectionView.reloadData()
-//            }
-//    }
-    
 }

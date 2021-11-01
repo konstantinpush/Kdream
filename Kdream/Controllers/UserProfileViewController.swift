@@ -21,7 +21,9 @@ class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        userAvatar.image = user.avatar
+        user.getImage() { image, name in
+            self.userAvatar.image = image
+        }
         userName.text = user.name
         userRole.text = user.role
 

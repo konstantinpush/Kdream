@@ -15,9 +15,17 @@ struct Product: Decodable{
     var mainphoto: String
     var urlword: String
     var price: Decimal
-    var image: UIImage{
-            PhotoService.loadPhotoFromUrl(_url: "https://kdream.ru/"+mainphoto)
+
+    func getImage(_ completion: @escaping ((UIImage, String) -> Void)) {
+        DispatchQueue.global().async {
+                PhotoService.loadPhotoFromUrl(_url: "https://kdream.ru"+mainphoto) { image in
+                    DispatchQueue.main.async {
+                        completion(image, name)
+                    }
+                }
+        }
     }
+
     init(name: String, description: String, tth: String,  mainphoto: String, urlword: String, price: Decimal){
         self.name = name
         self.mainphoto = mainphoto

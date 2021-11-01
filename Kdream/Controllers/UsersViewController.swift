@@ -32,7 +32,6 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
                 self?.tableUserList.reloadData()
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
      }
     
     func initSearchController(){
@@ -48,13 +47,9 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
 }
 
 extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
-    @objc func refresh() {
-       self.tableUserList.reloadData() // a refresh the tableView.
-   }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive{
@@ -77,19 +72,15 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             user = usersFromServer[indexPath.row]
         }
-        
+
         cell.userName.text = user.name
-        cell.userAvatar.image = user.avatar
-    
-        
+        user.getImage() { image, name in
+            if name == cell.userName.text, let _cell = tableView.cellForRow(at: indexPath) as? UserTableViewCell {
+                 _cell.userAvatar.image = image
+            }
+        }
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        DispatchQueue.main.async {
-//            self.tableUserList.reloadData()
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = usersFromServer[indexPath.row]
@@ -102,7 +93,6 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource{
         
         alert.addAction(profileAction)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        
         
         self.present(alert, animated: true, completion: nil)
     }

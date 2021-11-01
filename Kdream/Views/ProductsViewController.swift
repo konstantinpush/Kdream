@@ -23,20 +23,13 @@ class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearc
         tableProductsList.dataSource = self
         
         initSearchController()
-        
-        service.getAllProductsFromServer() { [weak self] products in
+
+        service.getAllProductsFromServer{ [weak self] (products: [Product]) in
             self?.productsFromServer = products
-            
-//            DispatchQueue.main.async {
-//                self?.tableProductsList.reloadData()
-//            }
+            self?.tableProductsList.reloadData()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
      }
-    @objc func refresh() {
-        tableProductsList.reloadData() // a refresh the tableView.
-    }
-    
+
     func initSearchController(){
         searchController.loadViewIfNeeded()
         searchController.searchResultsUpdater = self
@@ -46,7 +39,6 @@ class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearc
         searchController.searchBar.returnKeyType = UIReturnKeyType.done
         searchController.searchBar.placeholder = "Поиск"
         definesPresentationContext = true
-        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -76,41 +68,53 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.productName.text = product.name
-        cell.productImage.image = product.image
-//        cell.productPrice.text = product.price
+        product.getImage() { image, name in
+            if name == cell.productName.text, let _cell = tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
+                 _cell.productImage.image = image
+            }
+        }
         return cell
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: .destructive, title: "удалить"){_, indexPath in
+            self.productsFromServer.remove(at: indexPath.row)
+            self.tableProductsList.deleteRows(at: [indexPath], with: .automatic)
+        }
+        return [action]
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let product = productsFromServer[indexPath.row]
-//
-//        let alert = UIAlertController(title: product.name, message: product.description, preferredStyle: .actionSheet)
-//
-//        let profileAction = UIAlertAction(title: "Профиль", style: .default, handler: {(alert) in
-                self.performSegue(withIdentifier: "goToProduct", sender: indexPath)
-//            })
+        let product = productsFromServer[indexPath.row]
+
+        let alert = UIAlertController(title: product.name, message: "\(product.price) руб.", preferredStyle: .actionSheet)
+
+        let profileAction = UIAlertAction(title: "Редактировать", style: .default, handler: {(alert) in
+            self.performSegue(withIdentifier: "goToProduct", sender: indexPath)
+            })
         
-//        alert.addAction(profileAction)
-//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-//
-//        self.present(alert, animated: true, completion: nil)
+        alert.addAction(profileAction)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
     }
         
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "goToProduct"{
-//            let vc = segue.destination as! ProductsProfileViewController
-//            let indexPath = sender as! IndexPath
-//            let product: Product!
-//
-//            if searchController.isActive{
-//                product = filteredProducts[indexPath.row]
-//            }
-//            else{
-//                product = productsFromServer[indexPath.row]
-//            }
-//            vc.user = user
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToProduct"{
+            let vc = segue.destination as! ProductInfoViewController
+            let indexPath = sender as! IndexPath
+            let product: Product!
+
+            if searchController.isActive{
+                product = filteredProducts[indexPath.row]
+            }
+            else{
+                product = productsFromServer[indexPath.row]
+            }
+            vc.product = product
+        }
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -131,13 +135,4 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         tableProductsList.reloadData()
     }
-
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y
-//        let contentHeight = scrollView.contentSize.height
-//        print("offset \(offsetY) | contentHeight \(contentHeight)")
-//    }
 }
-
-

@@ -13,13 +13,14 @@ private let imageCache = NSCache<NSString, NSData>()
 
 class PhotoService{
     
-    public static func loadPhotoFromUrl(_url: String) -> UIImage{
+    public static func loadPhotoFromUrl(_url: String, completion: @escaping ( (UIImage) -> Void)) {
         let cacheID = NSString(string: _url)
         var imgFromNet = UIImage()
 
         if let imageFromCache = imageCache.object(forKey: cacheID){
             imgFromNet = UIImage(data: imageFromCache as Data)!
-            return imgFromNet
+            completion(imgFromNet)
+            return
         }
 
         if let url = URL(string: _url) {
@@ -29,12 +30,12 @@ class PhotoService{
                 DispatchQueue.main.async {
                     imgFromNet = UIImage(data: data) ?? UIImage(named: "img-user")!
                     imageCache.setObject(data as NSData, forKey: cacheID)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
+                    completion(imgFromNet)
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                 }
             }
             task.resume()
         }
-        return imgFromNet
     }
     
     func loadPhotoFromUrlClouser(_url: String, _ completion: @escaping (UIImage) -> Void) {
@@ -54,7 +55,7 @@ class PhotoService{
                     imageCache.setObject(data as NSData, forKey: cacheID)
                     completion(imgFromNet)
                     
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
                 }
             }
             task.resume()

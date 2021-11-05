@@ -12,13 +12,16 @@ class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearc
     var filteredProducts = [Product]()
     let searchController = UISearchController()
     
-    var service: InfoFromServerService = InfoFromServerService()
+    var service: ServerService = ServerService()
     var productsFromServer = [Product]()
     
     @IBOutlet weak var tableProductsList: UITableView!
+
+    var presenter: ProductPresenterProtocol!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let loader = loader()
         tableProductsList.delegate = self
         tableProductsList.dataSource = self
         
@@ -27,6 +30,7 @@ class ProductsViewController: UIViewController, UISearchResultsUpdating, UISearc
         service.getAllProductsFromServer{ [weak self] (products: [Product]) in
             self?.productsFromServer = products
             self?.tableProductsList.reloadData()
+            self?.stopLoader(loader: loader)
         }
      }
 
@@ -99,21 +103,9 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
 
         self.present(alert, animated: true, completion: nil)
     }
-        
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToProduct"{
-            let vc = segue.destination as! ProductInfoViewController
-            let indexPath = sender as! IndexPath
-            let product: Product!
 
-            if searchController.isActive{
-                product = filteredProducts[indexPath.row]
-            }
-            else{
-                product = productsFromServer[indexPath.row]
-            }
-            vc.product = product
-        }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        presenter.router.prepare(for: segue, sender: sender)
     }
     
     func updateSearchResults(for searchController: UISearchController) {

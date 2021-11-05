@@ -38,9 +38,6 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adip" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eMm-Fl-gJE">
                                 <rect key="frame" x="0.0" y="7" width="300" height="113"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="113" id="q6G-7T-jUd"/>
-                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -50,6 +47,7 @@
                             <constraint firstAttribute="trailing" secondItem="eMm-Fl-gJE" secondAttribute="trailing" id="3cx-u5-KaZ"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="4zB-Y9-BiO"/>
                             <constraint firstAttribute="bottom" secondItem="eMm-Fl-gJE" secondAttribute="bottom" constant="20" id="70Y-bk-qBv"/>
+                            <constraint firstItem="pUX-io-SlV" firstAttribute="bottom" secondItem="eMm-Fl-gJE" secondAttribute="bottom" constant="30" id="9go-b5-Gei"/>
                             <constraint firstItem="eMm-Fl-gJE" firstAttribute="top" secondItem="pUX-io-SlV" secondAttribute="top" constant="7" id="D0a-7S-lbI"/>
                             <constraint firstItem="eMm-Fl-gJE" firstAttribute="leading" secondItem="pUX-io-SlV" secondAttribute="leading" id="T4B-PD-6BX"/>
                             <constraint firstItem="eMm-Fl-gJE" firstAttribute="centerX" secondItem="oZK-Hh-wW4" secondAttribute="centerX" id="cK8-g1-NaI"/>

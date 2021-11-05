@@ -11,17 +11,17 @@ class MenuViewController: UIViewController{
     
     var menu: Menu = Menu()
     var products = [Product]()
-    var service: InfoFromServerService = InfoFromServerService()
+    var service: ServerService = ServerService()
     
     var selectedGroupIndex = 0
-    
+
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var groupsCollectionView: UICollectionView!
-    
+
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
+        let loader = self.loader()
+
         collectionView.register(UINib(nibName: "ProductCell", bundle: nil), forCellWithReuseIdentifier: "ProductCell")
         groupsCollectionView.register(UINib(nibName: "GroupCell", bundle: nil), forCellWithReuseIdentifier: "GroupCell")
         
@@ -35,6 +35,7 @@ class MenuViewController: UIViewController{
             self?.menu.groups = categories
             self?.groupsCollectionView.reloadData()
             self?.collectionView.reloadData()
+            self?.stopLoader(loader: loader)
         }
     }
 }
@@ -71,6 +72,7 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
                 if name == cell.nameProduct.text,
                     let _cell = collectionView.cellForItem(at: indexPath) as? ProductCell {
                     _cell.productImage.image = image
+                    _cell.productImage.enableZoom()
                 }
             }
             return cell
@@ -101,9 +103,9 @@ extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == groupsCollectionView{
             self.selectedGroupIndex = indexPath.item
-            
-            self.collectionView.scrollToItem(at: IndexPath(item:0, section:0), at: .centeredHorizontally, animated: false)
             self.collectionView.reloadData()
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
         } else {
             //
         }

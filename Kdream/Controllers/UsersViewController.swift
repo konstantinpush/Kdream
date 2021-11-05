@@ -12,25 +12,28 @@ class UsersViewController: UIViewController, UISearchResultsUpdating, UISearchCo
     var filteredUsers = [User]()
     let searchController = UISearchController()
     
-    var service: InfoFromServerService = InfoFromServerService()
+    var service: ServerService = ServerService()
     var usersFromServer = [User]()
     
     @IBOutlet weak var tableUserList: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let loader = self.loader()
         
         tableUserList.delegate = self
         tableUserList.dataSource = self
         
         initSearchController()
         
-        var InfoFromServerService = InfoFromServerService()
+        var InfoFromServerService = ServerService()
         
         service.getAllUsersFromServer() { [weak self] users in
             self?.usersFromServer = users
             DispatchQueue.main.async {
                 self?.tableUserList.reloadData()
+                self?.stopLoader(loader: loader)
             }
+
         }
      }
     

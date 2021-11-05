@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ProductInfoViewController: UIViewController {
+class OldProductInfoViewController: UIViewController {
 
 //    @IBOutlet weak var productImage: UIImageView!
-    @IBOutlet weak var productName: UITextField!
-    @IBOutlet weak var productPrice: UITextField!
-    @IBOutlet weak var blurView1: UIView!
+//    @IBOutlet weak var productName: UITextField!
+//    @IBOutlet weak var productPrice: UITextField!
+//    @IBOutlet weak var blurView1: UIView!
     
     var product: Product!
     let productImage = UIImageView()

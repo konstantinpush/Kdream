@@ -9,7 +9,6 @@ import UIKit
 
 class ProductInfoViewController: UIViewController, ProductInfoViewProtocol {
 
-
     @IBOutlet weak var HUDView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var loadCurrenciesButton: UIButton!
@@ -26,6 +25,7 @@ class ProductInfoViewController: UIViewController, ProductInfoViewProtocol {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
     let blurEffect = UIBlurEffect(style: .light)
 
     let lblNameOfProduct: UILabel = {
@@ -39,11 +39,50 @@ class ProductInfoViewController: UIViewController, ProductInfoViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(presenter.interactor.product.name ?? "не пришло")
-        // Do any additional setup after loading the view.
+
+//        print(presenter)
+//        presenter.interactor.getImageOfProduct()
+//        product.getImage() { image, name in
+//            self.productImage.image = image
+//        }
+        setupImageView()
+
+        view.addSubview(blurView)
+
+        blurView.effect = blurEffect
+        setupBlurEffect()
+
+//        lblNameOfProduct.text = product.name
+
+        blurView.contentView.addSubview(lblNameOfProduct)
+        lblNameOfProduct.centerXAnchor.constraint(equalTo: blurView.centerXAnchor).isActive = true
+        lblNameOfProduct.centerYAnchor.constraint(equalTo: blurView.centerYAnchor).isActive = true
     }
 
+    func setupImageView(){
+        view.addSubview(productImage)
+        productImage.translatesAutoresizingMaskIntoConstraints = false
+        productImage.contentMode = .scaleAspectFill
+
+        productImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        productImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        productImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        productImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+    func setupBlurEffect(){
+        blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+    
     //MARK: - protocols methods
+
+    func setImage(with image: UIImage) {
+        productImage.image = image
+//        urlButton.setTitle(title, for: .normal)
+    }
+
     func showHUD() {
         DispatchQueue.main.async {
             self.view.bringSubviewToFront(self.HUDView)

@@ -6,14 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
-protocol ProductInfoViewProtocol: AnyObject, GenericUIProtocols {
-
+protocol ProductInfoViewProtocol: AnyObject, GenericUIProtocol {
+//    func setImage(with image: UIImage)
 }
 
 protocol ProductInfoInteractorProtocol: AnyObject {
-    var product: Product { get }
-    func getImageOfProduct()
+    var product: Product { get set }
 }
 
 protocol ProductInfoPresenterProtocol: AnyObject {

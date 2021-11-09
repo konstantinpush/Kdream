@@ -8,6 +8,7 @@
 import Foundation
 
 class ProductPresenter: ProductPresenterProtocol {
+
     weak var view: ProductViewProtocol!
     var interactor: ProductInteractorProtocol!
     var router: ProductRouterProtocol!
@@ -20,12 +21,10 @@ class ProductPresenter: ProductPresenterProtocol {
 
     func configureView() {
         interactor.loadProductFromServer()
-        
-//        view.setUrlButtonTitle(with: interactor.urlRatesSource)
     }
 
     func updateTable() {
-        view?.updateTableData()
+        view?.updateTable()
     }
     func showHUD() {
         view.showHUD()

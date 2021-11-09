@@ -16,28 +16,21 @@ class ProductInfoPresenter: ProductInfoPresenterProtocol {
     required init(view: ProductInfoViewProtocol) {
         self.view = view
     }
-    
-    var product: Product {
-        get {
-            return interactor.product
-        }
-    }
+
     // MARK: - ProductInfoPresenterProtocol methods
     func showHUD() {
-        //
+        view.showHUD()
     }
 
     func showLoadCurrenciesButton() {
-        //
+        view.showLoadCurrenciesButton()
     }
 
     func hideHUD() {
-        //
+        view.hideHUD()
     }
 
     func configureView() {
-//        interactor.loadProductFromServer()
-
-//        view.setUrlButtonTitle(with: interactor.urlRatesSource)
+//        view.setImage(with: interactor.product.mainphoto)
     }
 }

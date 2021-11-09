@@ -6,25 +6,28 @@
 //
 
 import Foundation
+import UIKit
 
 class ProductInfoInteractor: ProductInfoInteractorProtocol {
-    func getImageOfProduct() {
-//        product.getImage{ [weak self] image, name in
-//            print(self?.image)
-//        }
+    var product: Product {
+        get{
+            return product
+        }
+        set{
+            product = newValue
+        }
     }
 
+    func getImageOfProduct() {
+        presenter.showHUD()
+        product.getImage{ [weak self] (image, name) in
+            self?.presenter.hideHUD()
+        }
+    }
 
     weak var presenter: ProductInfoPresenterProtocol!
-//    let serverService: ServerServiceProtocol = ServerService()
 
     required init(presenter: ProductInfoPresenterProtocol) {
         self.presenter = presenter
-    }
-
-    var product: Product {
-        get {
-            return product
-        }
     }
 }

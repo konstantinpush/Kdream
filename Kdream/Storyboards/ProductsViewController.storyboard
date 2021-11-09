@@ -72,7 +72,7 @@
         <!--Товары-->
         <scene sceneID="6u8-Mn-bHl">
             <objects>
-                <viewController storyboardIdentifier="ProductsViewController" id="aba-Ye-MOS" customClass="ProductViewController" customModule="Kdream" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductViewController" id="aba-Ye-MOS" customClass="ProductViewController" customModule="Kdream" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qlm-7I-1DN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

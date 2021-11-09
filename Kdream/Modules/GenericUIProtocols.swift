@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
-protocol GenericUIProtocols {
+protocol GenericUIProtocol {
     func showHUD()
     func showLoadCurrenciesButton()
     func hideHUD()
